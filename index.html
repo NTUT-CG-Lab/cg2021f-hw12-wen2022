@@ -18,7 +18,7 @@
 <script>
     // 建構子 ScoreOutputer 接受一個字串，該字串為 csv 的檔案名稱
     // 以下面範例，檔名就為 "109598105(總分: 6).csv"
-    var so = new ScoreOutputer("110598045");
+    var so = new ScoreOutputer("107590014");
     so.installCSS(function () {
         so.addChild("透過模型分割出心臟，輸出心臟遮罩圖片", 6, true);
         so.addChild("心臟遮罩圖片轉成nrrd檔案 ", 1, true);
@@ -54,7 +54,7 @@
 
     let renderer, scene, camera, controls, material, volconfig, cmtextures;
 
-    let modelPath = './data/nrrd_data/ID00423637202312137826377_gt_mask.nrrd';
+    let modelPath = './data/nrrd_data/ID00423637202312137826377_mask.nrrd';
 
     volconfig = {clim1: 0, clim2: 1, renderstyle: 'iso', isothreshold: 0.15, colormap: 'red'};
 
@@ -77,7 +77,7 @@
 
     function createCamera() {
         // Create camera (The volume renderer does not work very well with perspective yet)
-        const h = 512; // frustum height
+        const h = 512; 
         const aspect = window.innerWidth / window.innerHeight;
         camera = new THREE.OrthographicCamera(-h * aspect / 2, h * aspect / 2, h / 2, -h / 2, 1, 1000);
         camera.position.set(64, -64, 128);
@@ -85,7 +85,6 @@
     }
 
     function createRender() {
-        // Create renderer
         renderer = new THREE.WebGLRenderer();
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -93,7 +92,6 @@
     }
 
     function createControl() {
-        // Create controls
         controls = new OrbitControls(camera, renderer.domElement);
         controls.addEventListener('change', render);
         controls.target.set(64, 64, 128);
@@ -110,12 +108,10 @@
             texture.minFilter = texture.magFilter = THREE.LinearFilter;
             texture.unpackAlignment = 1;
 
-            // Colormap textures
             cmtextures = {
                 red: new THREE.TextureLoader().load('./three/examples/textures/red.png', render)
             };
 
-            // Material
             const shader = VolumeRenderShader1;
 
             const uniforms = THREE.UniformsUtils.clone(shader.uniforms);
